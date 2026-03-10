@@ -83,6 +83,24 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    isLoading(true);
+    try {
+      await _authRepository.signInWithGoogle();
+      Get.offAll(() => const HomePage());
+    } on FirebaseAuthException catch (e) {
+      String message = "Sign in failed.";
+      if (e.code == 'ERROR_ABORTED_BY_USER') {
+        message = "Sign in was cancelled.";
+      }
+      Get.snackbar("Error", message, snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading(false);
+    }
+  }
+
   Future<void> signOut() async {
     try {
       // Clear tasks so the next user doesn't see stale data

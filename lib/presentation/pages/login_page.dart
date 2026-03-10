@@ -179,16 +179,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: ElevatedButton(
                         onPressed: _authController.isLoading.value
                             ? null
-                            : () {
-                                _authController.signIn(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                );
-                              },
+                            : () => _authController.signIn(
+                                _emailController.text.trim(),
+                                _passwordController.text.trim(),
+                              ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(
-                            0xFF2D6AA1,
-                          ), // Match exact reference blue
+                          backgroundColor: const Color(0xFF2D6AA1),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -211,6 +207,66 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.white,
                                 ),
                               ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Divider
+                  Row(
+                    children: [
+                      Expanded(child: Divider(color: Colors.grey[300])),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "Or continue with",
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: Colors.grey[300])),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Google Sign In Button
+                  Obx(
+                    () => SizedBox(
+                      width: double.infinity,
+                      height: 55,
+                      child: OutlinedButton(
+                        onPressed: _authController.isLoading.value
+                            ? null
+                            : () => _authController.signInWithGoogle(),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.grey[300]!),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.network(
+                              'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png',
+                              height: 24,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              "Sign in with Google",
+                              style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF0B1426),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
